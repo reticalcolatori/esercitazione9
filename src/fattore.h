@@ -14,28 +14,39 @@ extern "C" {
 #endif
 
 
-struct Output {
+struct GiudicePunteggio {
 	char *nomeGiudice;
 	int punteggioTot;
 };
-typedef struct Output Output;
+typedef struct GiudicePunteggio GiudicePunteggio;
 
-#define FATTOREX 0x20042069
+struct ClassificaGiudici {
+	GiudicePunteggio currGiudice[20];
+};
+typedef struct ClassificaGiudici ClassificaGiudici;
+
+struct CandOp {
+	char *candidato;
+	char *operazione;
+};
+typedef struct CandOp CandOp;
+
+#define FATTOREX 0x20000010
 #define VERSFATTOREX 1
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define CLASSIFICA_GIUDICI 1
-extern  Output * classifica_giudici_1(void *, CLIENT *);
-extern  Output * classifica_giudici_1_svc(void *, struct svc_req *);
+extern  ClassificaGiudici * classifica_giudici_1(void *, CLIENT *);
+extern  ClassificaGiudici * classifica_giudici_1_svc(void *, struct svc_req *);
 #define ESPRIMI_VOTO 2
-extern  int * esprimi_voto_1(char **, CLIENT *);
-extern  int * esprimi_voto_1_svc(char **, struct svc_req *);
+extern  int * esprimi_voto_1(CandOp *, CLIENT *);
+extern  int * esprimi_voto_1_svc(CandOp *, struct svc_req *);
 extern int fattorex_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define CLASSIFICA_GIUDICI 1
-extern  Output * classifica_giudici_1();
-extern  Output * classifica_giudici_1_svc();
+extern  ClassificaGiudici * classifica_giudici_1();
+extern  ClassificaGiudici * classifica_giudici_1_svc();
 #define ESPRIMI_VOTO 2
 extern  int * esprimi_voto_1();
 extern  int * esprimi_voto_1_svc();
@@ -45,10 +56,14 @@ extern int fattorex_1_freeresult ();
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_Output (XDR *, Output*);
+extern  bool_t xdr_GiudicePunteggio (XDR *, GiudicePunteggio*);
+extern  bool_t xdr_ClassificaGiudici (XDR *, ClassificaGiudici*);
+extern  bool_t xdr_CandOp (XDR *, CandOp*);
 
 #else /* K&R C */
-extern bool_t xdr_Output ();
+extern bool_t xdr_GiudicePunteggio ();
+extern bool_t xdr_ClassificaGiudici ();
+extern bool_t xdr_CandOp ();
 
 #endif /* K&R C */
 

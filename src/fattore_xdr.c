@@ -6,13 +6,37 @@
 #include "fattore.h"
 
 bool_t
-xdr_Output (XDR *xdrs, Output *objp)
+xdr_GiudicePunteggio (XDR *xdrs, GiudicePunteggio *objp)
 {
 	register int32_t *buf;
 
 	 if (!xdr_string (xdrs, &objp->nomeGiudice, 100))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->punteggioTot))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_ClassificaGiudici (XDR *xdrs, ClassificaGiudici *objp)
+{
+	register int32_t *buf;
+
+	int i;
+	 if (!xdr_vector (xdrs, (char *)objp->currGiudice, 20,
+		sizeof (GiudicePunteggio), (xdrproc_t) xdr_GiudicePunteggio))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_CandOp (XDR *xdrs, CandOp *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_string (xdrs, &objp->candidato, 100))
+		 return FALSE;
+	 if (!xdr_string (xdrs, &objp->operazione, 20))
 		 return FALSE;
 	return TRUE;
 }

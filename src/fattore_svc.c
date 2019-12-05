@@ -20,7 +20,7 @@ static void
 fattorex_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		char *esprimi_voto_1_arg;
+		CandOp esprimi_voto_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -33,12 +33,12 @@ fattorex_1(struct svc_req *rqstp, register SVCXPRT *transp)
 
 	case CLASSIFICA_GIUDICI:
 		_xdr_argument = (xdrproc_t) xdr_void;
-		_xdr_result = (xdrproc_t) xdr_Output;
+		_xdr_result = (xdrproc_t) xdr_ClassificaGiudici;
 		local = (char *(*)(char *, struct svc_req *)) classifica_giudici_1_svc;
 		break;
 
 	case ESPRIMI_VOTO:
-		_xdr_argument = (xdrproc_t) xdr_wrapstring;
+		_xdr_argument = (xdrproc_t) xdr_CandOp;
 		_xdr_result = (xdrproc_t) xdr_int;
 		local = (char *(*)(char *, struct svc_req *)) esprimi_voto_1_svc;
 		break;
