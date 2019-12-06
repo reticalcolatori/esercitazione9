@@ -95,7 +95,7 @@ ClassificaGiudici * classifica_giudici_1_svc(void * voidValue, struct svc_req *r
 	inizializza();
 	
 	// inizializzo result a tutti valori "L"
-	for(i=0; i<N; i++){
+	for(i=0; i<20; i++){
 		result.currGiudice[i].nomeGiudice = malloc(2);
 		strcpy(result.currGiudice[i].nomeGiudice, "L");
 		result.currGiudice[i].punteggioTot = -1;
@@ -115,7 +115,7 @@ ClassificaGiudici * classifica_giudici_1_svc(void * voidValue, struct svc_req *r
 
 		//se il giudice non era presente lo aggiungo e aggiorno il numero dei voti
 		if(presente == 0){
-			free(result.currGiudice[i].nomeGiudice);
+			free(result.currGiudice[ind].nomeGiudice);
 			result.currGiudice[ind].nomeGiudice = malloc(strlen(tabella[i].giudice) + 1);
 			strcpy(result.currGiudice[ind].nomeGiudice, tabella[i].giudice);
 			result.currGiudice[ind].punteggioTot = tabella[i].voto;
@@ -191,6 +191,6 @@ int * esprimi_voto_1_svc(CandOp *candOp, struct svc_req *reqstp){
 		}
 	}
 
-	printf ("Risultato esprimi_voto: \n\tabella Cantante = %s \n\tabella Voti = %d\n", candOp->candidato, votoTot);
+	printf ("Risultato esprimi_voto: \n\ttabella Cantante = %s \n\ttabella Voti = %d\n", candOp->candidato, votoTot);
 	return (&found);
 }

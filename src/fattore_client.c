@@ -19,12 +19,15 @@ int main (int argc, char *argv[])
 
     CLIENT *client;
     char *server;
+    void *in;
+    ClassificaGiudici *res;
 
     if(argc != 2) {
         perror("Usage: client nameServer");
         exit(EXIT_FAILURE);
     }
 
+    //strcpy(server, argv[1]);
     server = argv[1];
 
     client = clnt_create(server, FATTOREX, VERSFATTOREX, "udp");
@@ -39,7 +42,7 @@ int main (int argc, char *argv[])
     while (gets(currOp)) {
         if (currOp[0] == 'C'|| currOp[0] == 'c') {
             
-            ClassificaGiudici *res = classifica_giudici_1(xdr_void, client);
+            res = classifica_giudici_1(in, client);
             if(res == NULL) {
                 clnt_perror(client, "Errore durante ricezione classifica\n");
                 exit(EXIT_FAILURE);
@@ -59,7 +62,7 @@ int main (int argc, char *argv[])
 
             printf("aggiunta/sottrazione?\n");
 
-            char op[100];
+            char op[20];
             gets(op);
 
             CandOp candOp;
@@ -72,7 +75,7 @@ int main (int argc, char *argv[])
                 exit(EXIT_FAILURE);
             }
 
-            if(res < 0) 
+            if(*res < 0) 
                 printf("Impossibile completare operazione richiesta\n");
             else
                 printf("Operazione completata con successo\n");
