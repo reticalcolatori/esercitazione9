@@ -6,3 +6,7 @@ server:
 
 test:
 	gcc test.c -o test
+
+all:
+	make server
+	make client
